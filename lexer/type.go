@@ -10,5 +10,5 @@ const (
 	TFloat
 	TKeyword
 	TIdentifier
-	TOperator
+	TDelimiter
 )

@@ -32,7 +32,7 @@ func (t Token) Keyword() Keyword {
 	return t.Value.(Keyword)
 }
 
-// Operator returns the token's value when its type is TOperator.
-func (t Token) Operator() Operator {
-	return t.Value.(Operator)
+// Delimiter returns the token's value when its type is TDelimiter.
+func (t Token) Delimiter() Delimiter {
+	return t.Value.(Delimiter)
 }
