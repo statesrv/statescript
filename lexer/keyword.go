@@ -4,7 +4,8 @@ package lexer
 type Keyword int
 
 const (
-	KBool Keyword = iota
+	KNone Keyword = iota
+	KBool
 	KInt
 	KFloat
 	KString
@@ -24,3 +25,40 @@ const (
 	KCase
 	KDefault
 )
+
+func identifierToKeyword(v string) Keyword {
+	switch v {
+	case "bool":
+		return KBool
+	case "int":
+		return KInt
+	case "float":
+		return KFloat
+	case "string":
+		return KString
+	case "struct":
+		return KStruct
+	case "true":
+		return KTrue
+	case "false":
+		return KFalse
+	case "if":
+		return KIf
+	case "else":
+		return KElse
+	case "while":
+		return KWhile
+	case "break":
+		return KBreak
+	case "continue":
+		return KContinue
+	case "switch":
+		return KSwitch
+	case "case":
+		return KCase
+	case "default":
+		return KDefault
+	default:
+		return KNone
+	}
+}
