@@ -4,7 +4,8 @@ package lexer
 type Delimiter int
 
 const (
-	DNot Delimiter = iota
+	DCompound Delimiter = iota
+	DNot
 
 	DMultiply
 	DMultiplyAssign
@@ -33,4 +34,24 @@ const (
 	DRParen
 	DLIndex
 	DRIndex
+)
+
+var (
+	delimiterMap = map[rune]Delimiter{
+		'!': DCompound,
+		'*': DCompound,
+		'/': DCompound,
+		'%': DCompound,
+		'+': DCompound,
+		'-': DCompound,
+		'<': DCompound,
+		'>': DCompound,
+		'=': DCompound,
+		'&': DCompound,
+		'|': DCompound,
+		'(': DLParen,
+		')': DRParen,
+		'[': DLIndex,
+		']': DRIndex,
+	}
 )
