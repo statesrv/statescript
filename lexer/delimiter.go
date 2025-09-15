@@ -4,7 +4,7 @@ package lexer
 type Delimiter int
 
 const (
-	DCompound Delimiter = iota
+	DNone Delimiter = iota
 	DNot
 
 	DMultiply
@@ -37,21 +37,66 @@ const (
 )
 
 var (
-	delimiterMap = map[rune]Delimiter{
-		'!': DCompound,
-		'*': DCompound,
-		'/': DCompound,
-		'%': DCompound,
-		'+': DCompound,
-		'-': DCompound,
-		'<': DCompound,
-		'>': DCompound,
-		'=': DCompound,
-		'&': DCompound,
-		'|': DCompound,
+	singleDelimiters = map[rune]Delimiter{
+		'!': DNot,
+		'*': DMultiply,
+		'/': DDivide,
+		'%': DModulo,
+		'+': DAdd,
+		'-': DSubtract,
+		'<': DLessThan,
+		'>': DGreaterThan,
+		'=': DAssignment,
 		'(': DLParen,
 		')': DRParen,
 		'[': DLIndex,
 		']': DRIndex,
 	}
+	compoundDelimiters = map[string]Delimiter{
+		"*=": DMultiplyAssign,
+		"/=": DDivideAssign,
+		"%=": DModuloAssign,
+		"+=": DAddAssign,
+		"-=": DSubtractAssign,
+		"<=": DLessThanOrEqual,
+		">=": DGreaterThanOrEqual,
+		"==": DEqual,
+		"!=": DNotEqual,
+		"&&": DLogicalAnd,
+		"||": DLogicalOr,
+	}
 )
+
+func (l *Lexer) isDelimiter() bool {
+	switch l.cur {
+	case '!', '*', '/', '%',
+		'+', '-', '<', '>',
+		'=', '&', '|', '(',
+		')', '[', ']':
+		return true
+	}
+	return false
+}
+
+func (l *Lexer) lexDelimiter() *Token {
+	v := l.cur
+	if l.next(false) {
+		d, ok := compoundDelimiters[string(v)+string(l.cur)]
+		if ok {
+			l.next(false)
+			return &Token{
+				Type:  TDelimiter,
+				Value: d,
+			}
+		}
+	}
+	d, ok := singleDelimiters[v]
+	if !ok {
+		l.setError("invalid delimiter \"%c\"", v)
+		return nil
+	}
+	return &Token{
+		Type:  TDelimiter,
+		Value: d,
+	}
+}

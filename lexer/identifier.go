@@ -62,3 +62,21 @@ func identifierToKeyword(v string) Keyword {
 		return KNone
 	}
 }
+
+func (l *Lexer) lexIdentifier() *Token {
+	v := string(l.cur)
+	for l.next(false) {
+		v += string(l.cur)
+	}
+	k := identifierToKeyword(v)
+	if k != KNone {
+		return &Token{
+			Type:  TKeyword,
+			Value: k,
+		}
+	}
+	return &Token{
+		Type:  TIdentifier,
+		Value: v,
+	}
+}

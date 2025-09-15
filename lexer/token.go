@@ -1,5 +1,19 @@
 package lexer
 
+// Type indicates the type of value a token contains.
+type Type int
+
+const (
+	TEOF Type = iota
+	TChar
+	TString
+	TInt
+	TFloat
+	TKeyword
+	TIdentifier
+	TDelimiter
+)
+
 // Token represents an individual lexeme extracted from the Lexer.
 type Token struct {
 
@@ -10,6 +24,11 @@ type Token struct {
 	// asserted based on the value of Type and retreived with the convenience
 	// methods.
 	Value any
+}
+
+// Rune returns the token's value when its type is TChar.
+func (t Token) Rune() rune {
+	return t.Value.(rune)
 }
 
 // String returns the token's value when its type is TString or TIdentifier.

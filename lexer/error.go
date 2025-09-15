@@ -27,3 +27,7 @@ func (l *Lexer) makeError(format string, a ...any) *Error {
 		Message:    fmt.Sprintf(format, a),
 	}
 }
+
+func (l *Lexer) setError(format string, a ...any) {
+	l.err = l.makeError(format, a...)
+}
