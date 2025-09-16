@@ -8,6 +8,7 @@ import (
 type Error struct {
 	Context    string
 	LineNumber int
+	ColNumber  int
 	Message    string
 }
 
@@ -24,6 +25,7 @@ func (l *Lexer) makeError(format string, a ...any) *Error {
 	return &Error{
 		Context:    l.context,
 		LineNumber: l.lineNumber,
+		ColNumber:  l.colNumber,
 		Message:    fmt.Sprintf(format, a...),
 	}
 }

@@ -26,32 +26,36 @@ type Token struct {
 	Value any
 }
 
-// Rune returns the token's value when its type is TChar.
-func (t Token) Rune() rune {
+// AsRune returns the token's value when its type is TChar.
+func (t Token) AsRune() rune {
 	return t.Value.(rune)
 }
 
-// String returns the token's value when its type is TString or TIdentifier.
-func (t Token) String() string {
+// AsString returns the token's value when its type is TString or TIdentifier.
+func (t Token) AsString() string {
 	return t.Value.(string)
 }
 
-// Int64 returns the token's value when its type is TInt.
-func (t Token) Int64() int64 {
+// AsInt64 returns the token's value when its type is TInt.
+func (t Token) AsInt64() int64 {
 	return t.Value.(int64)
 }
 
-// Float64 returns the token's value when its type is TFloat.
-func (t Token) Float64() float64 {
+// AsFloat64 returns the token's value when its type is TFloat.
+func (t Token) AsFloat64() float64 {
 	return t.Value.(float64)
 }
 
-// Keyword returns the token's value when its type is TKeyword.
-func (t Token) Keyword() Keyword {
+// AsKeyword returns the token's value when its type is TKeyword.
+func (t Token) AsKeyword() Keyword {
 	return t.Value.(Keyword)
 }
 
-// Delimiter returns the token's value when its type is TDelimiter.
-func (t Token) Delimiter() Delimiter {
+func (t Token) AsIdentifier() string {
+	return t.Value.(string)
+}
+
+// AsDelimiter returns the token's value when its type is TDelimiter.
+func (t Token) AsDelimiter() Delimiter {
 	return t.Value.(Delimiter)
 }

@@ -51,6 +51,7 @@ func (l *Lexer) Next() (*Token, *Error) {
 	var t *Token
 	if l.skipWhitespace() {
 		switch {
+		case l.cur == 0:
 		case l.cur == '\'':
 			t = l.lexChar()
 		case l.cur == '"':

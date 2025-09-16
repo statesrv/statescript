@@ -38,9 +38,11 @@ func (l *Lexer) lexNumber() *Token {
 	v += l.lexNumberSegmentOptional()
 	if l.cur == 'e' || l.cur == 'E' {
 		v += string(l.cur)
+		l.next(false)
 	}
 	if l.cur == '+' || l.cur == '-' {
 		v += string(l.cur)
+		l.next(false)
 	}
 	v += l.lexNumberSegmentOptional()
 	f, err := strconv.ParseFloat(v, 64)

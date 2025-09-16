@@ -4,8 +4,7 @@ package lexer
 type Keyword int
 
 const (
-	KNone Keyword = iota
-	KBool
+	KBool Keyword = iota
 	KInt
 	KFloat
 	KString
@@ -26,50 +25,36 @@ const (
 	KDefault
 )
 
-func identifierToKeyword(v string) Keyword {
-	switch v {
-	case "bool":
-		return KBool
-	case "int":
-		return KInt
-	case "float":
-		return KFloat
-	case "string":
-		return KString
-	case "struct":
-		return KStruct
-	case "true":
-		return KTrue
-	case "false":
-		return KFalse
-	case "if":
-		return KIf
-	case "else":
-		return KElse
-	case "while":
-		return KWhile
-	case "break":
-		return KBreak
-	case "continue":
-		return KContinue
-	case "switch":
-		return KSwitch
-	case "case":
-		return KCase
-	case "default":
-		return KDefault
-	default:
-		return KNone
+var (
+	keywords = map[string]Keyword{
+		"bool":     KBool,
+		"int":      KInt,
+		"float":    KFloat,
+		"string":   KString,
+		"struct":   KStruct,
+		"true":     KTrue,
+		"false":    KFalse,
+		"if":       KIf,
+		"else":     KElse,
+		"while":    KWhile,
+		"break":    KBreak,
+		"continue": KContinue,
+		"switch":   KSwitch,
+		"case":     KCase,
+		"default":  KDefault,
 	}
-}
+)
 
 func (l *Lexer) lexIdentifier() *Token {
 	v := string(l.cur)
 	for l.next(false) {
+		if !l.isAlphanum() {
+			break
+		}
 		v += string(l.cur)
 	}
-	k := identifierToKeyword(v)
-	if k != KNone {
+	k, ok := keywords[v]
+	if ok {
 		return &Token{
 			Type:  TKeyword,
 			Value: k,

@@ -15,6 +15,7 @@ func (l *Lexer) lexChar() *Token {
 		l.setError("expected \"'\"")
 		return nil
 	}
+	l.next(false)
 	return &Token{
 		Type:  TChar,
 		Value: v,
