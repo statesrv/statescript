@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"errors"
 	"reflect"
 	"strings"
 	"testing"
@@ -48,8 +49,18 @@ func doTests(t *testing.T, tests []*tTest) {
 	}
 }
 
+type tBadReader struct{}
+
+func (tBadReader) Read(p []byte) (n int, err error) {
+	return 0, errors.New("test")
+}
+
 func TestFailedIO(t *testing.T) {
-	// TODO
+	r := &tBadReader{}
+	_, err := New(r, nil)
+	if err == nil {
+		t.Fatal("error expected")
+	}
 }
 
 func TestBadInput(t *testing.T) {
