@@ -48,6 +48,10 @@ func (d Delimiter) String() string {
 		return "||"
 	case DAssignment:
 		return "="
+	case DLBrace:
+		return "{"
+	case DRBrace:
+		return "}"
 	case DLParen:
 		return "("
 	case DRParen:

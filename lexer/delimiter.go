@@ -30,6 +30,8 @@ const (
 
 	DAssignment
 
+	DLBrace
+	DRBrace
 	DLParen
 	DRParen
 	DLIndex
@@ -47,6 +49,8 @@ var (
 		'<': DLessThan,
 		'>': DGreaterThan,
 		'=': DAssignment,
+		'{': DLBrace,
+		'}': DRBrace,
 		'(': DLParen,
 		')': DRParen,
 		'[': DLIndex,
@@ -71,8 +75,9 @@ func (l *Lexer) isDelimiter() bool {
 	switch l.cur {
 	case '!', '*', '/', '%',
 		'+', '-', '<', '>',
-		'=', '&', '|', '(',
-		')', '[', ']':
+		'=', '&', '|', '{',
+		'}', '(', ')', '[',
+		']':
 		return true
 	}
 	return false
